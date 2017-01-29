@@ -1,0 +1,29 @@
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2008
+
+Project("{76355020-9662-349A-C50F-B9885BDAC798}") = "LastChance", "Assembly-CSharp.csproj", "{07AED895-BA06-2A22-A430-8F8FE8BEE51B}"
+EndProject
+Project("{76355020-9662-349A-C50F-B9885BDAC798}") = "LastChance", "Assembly-CSharp-Editor.csproj", "{6AF14D0B-9625-DFDE-6ECA-F31821C520B3}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{07AED895-BA06-2A22-A430-8F8FE8BEE51B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{07AED895-BA06-2A22-A430-8F8FE8BEE51B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{07AED895-BA06-2A22-A430-8F8FE8BEE51B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{07AED895-BA06-2A22-A430-8F8FE8BEE51B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6AF14D0B-9625-DFDE-6ECA-F31821C520B3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6AF14D0B-9625-DFDE-6ECA-F31821C520B3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6AF14D0B-9625-DFDE-6ECA-F31821C520B3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6AF14D0B-9625-DFDE-6ECA-F31821C520B3}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(MonoDevelopProperties) = preSolution
+		StartupItem = Assembly-CSharp.csproj
+	EndGlobalSection
+EndGlobal
