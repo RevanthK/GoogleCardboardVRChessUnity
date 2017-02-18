@@ -1,0 +1,29 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GoogleCardboardVRChessUnity", "Assembly-CSharp.csproj", "{34E561D9-F07D-10D1-417B-479398BC4F3B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GoogleCardboardVRChessUnity", "Assembly-CSharp-Editor.csproj", "{DD4D9F72-C7C1-CBE0-6950-06DDACFAA6FE}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{34E561D9-F07D-10D1-417B-479398BC4F3B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{34E561D9-F07D-10D1-417B-479398BC4F3B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{34E561D9-F07D-10D1-417B-479398BC4F3B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{34E561D9-F07D-10D1-417B-479398BC4F3B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DD4D9F72-C7C1-CBE0-6950-06DDACFAA6FE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DD4D9F72-C7C1-CBE0-6950-06DDACFAA6FE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DD4D9F72-C7C1-CBE0-6950-06DDACFAA6FE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DD4D9F72-C7C1-CBE0-6950-06DDACFAA6FE}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(MonoDevelopProperties) = preSolution
+		StartupItem = Assembly-CSharp.csproj
+	EndGlobalSection
+EndGlobal

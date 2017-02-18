@@ -22,8 +22,6 @@ public class test : MonoBehaviour {
 		var subscription = Meteor.Subscription.Subscribe ("board", 1);
 	    yield return (Coroutine)subscription;
 
-
-
 		col = new Meteor.Collection<DocumentType> ("ascii");
 		col2 = new Meteor.Collection<DocumentType2> ("status");
 		col3 = new Meteor.Collection<DocumentType3> ("moves");
