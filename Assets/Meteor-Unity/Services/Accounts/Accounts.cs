@@ -336,6 +336,7 @@ namespace Meteor
 				// If we can login with token, go for it.
 				yield return (Coroutine)tokenLogin;
 				if (tokenLogin.Error == null) {
+					Debug.LogWarning ("error");
 					yield break;
 				}
 			}

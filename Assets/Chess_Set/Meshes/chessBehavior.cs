@@ -6,10 +6,12 @@ using System.Collections.Generic;
 public class chessBehavior : MonoBehaviour {
 
 
-	Meteor.Collection<DocumentType> col;
-	Meteor.Collection<DocumentType2> col2;
-	Meteor.Collection<DocumentType3> col3;
+	Meteor.Collection<DocumentType> game;
 	string move;
+	string userId;
+	string color;
+	bool listening = false;
+	String newMove = "";
 
 	// Use this for initialization
 	void Start () {
@@ -17,42 +19,28 @@ public class chessBehavior : MonoBehaviour {
 		GvrViewer.Instance.Recenter ();
 
 
-		StartCoroutine (MeteorExample ());
+		StartCoroutine (MeteorInit ());
 
 	}
 
-	IEnumerator MeteorExample(){
-		yield return Meteor.Connection.Connect ("ws://vrchess.herokuapp.com/websocket");
-
-		var subscription = Meteor.Subscription.Subscribe ("board", 1);
-		yield return (Coroutine)subscription;
-
-
-		col = new Meteor.Collection<DocumentType> ("ascii");
-		col2 = new Meteor.Collection<DocumentType2> ("status");
-		col3 = new Meteor.Collection<DocumentType3> ("moves");
-
-		//Debug.Log (col.FindOne ().ascii);
+	IEnumerator MeteorInit(){
+		yield return Meteor.Connection.Connect ("ws://localhost:3000/websocket");
 
 		//Debug.Log (xyz);
 		move = "";
 
+		var methodCall = Meteor.Method<string>.Call ("readyToPlay");
+		yield return (Coroutine)methodCall;
+		userId = methodCall.Response;
 
-		bool gameOver = (col2.FindOne().status == "true");
+		var subscription = Meteor.Subscription.Subscribe ("game", userId);
+		yield return (Coroutine)subscription;
+		game = new Meteor.Collection<DocumentType> ("games");
 
-		//update piece positions
+		bool gameOver = game.FindOne().gameOver == true;
 
-		var constStart = -.245;
-		var constInc = .07;
+		color = turnToColor(game.FindOne ().turn);
 
-		var i = 0;
-		var j = 0;
-
-
-		//var methodCall = Meteor.Method.Call ("movePiece", "a2a3");
-		//yield return (Coroutine)methodCall;
-
-		// Execute the method. This will yield until all the database side effects have synced.
 
 
 
@@ -62,43 +50,45 @@ public class chessBehavior : MonoBehaviour {
 	void Update () {
 
 
-		bool requestMove = false;
-
-		if (GvrViewer.Instance.Triggered) {
-			makeMove ("d2d4");
-
+		if (!move.Equals(game.FindOne().latestMove)){
+			makeMove (game.FindOne().latestMove);
+			move = game.FindOne ().latestMove;
 		}
 
-		if (col2.FindOne().status.Equals("true")) {
-			
 
+		if (game.FindOne () == null) {
+			//exit game
 		} else {
 
-			if (requestMove) {
-				
-				//Meteor.Method.Call ("movePiece", "a2a3");
+			if (turnToColor (game.FindOne ().turn).Equals (color)) {
+				string move = "";					
+				if (GvrViewer.Instance.Triggered) {
+					//call get user command, get move in string move
+					makeMove (color + "" + newMove);
+				}
 
-			} 
-
-
-			String s = col.FindOne().ascii;
-
-			if (s != null && !move.Equals (s)) {
-
-				makeMove (s);
-
-				move = s;
 			}
 		}
 
 	}
 
-	public void makeMove(string s){
-		GameObject gm = findObj (s.Substring (0, 2));
+	public string turnToColor(int turn){
+		if (turn % 2 == 0) {
+			return "w";
+		} else {
+			return "b";
+		}
+	}
+
+	public IEnumerator makeMove(string s){
+		move = s;
+		var moveMethod = Meteor.Method<string>.Call ("movePiece", s.Substring(1), userId);
+		yield return (Coroutine)moveMethod;
+		GameObject gm = findObj (s.Substring (1, 3));
 
 		Debug.Log (gm);
 
-		GameObject target = findObj (s.Substring (2));
+		GameObject target = findObj (s.Substring (3));
 
 
 
@@ -107,7 +97,7 @@ public class chessBehavior : MonoBehaviour {
 		}
 
 
-		Vector3 v = findCoord (s.Substring (2));
+		Vector3 v = findCoord (s.Substring (3));
 
 
 
@@ -120,20 +110,16 @@ public class chessBehavior : MonoBehaviour {
 
 
 	public class DocumentType: Meteor.MongoDocument {
+		public object chessObj;
 		public string ascii;
-		public int _id;
-		public string element;
+		public string latestMove;
+		public int player1;
+		public int player2;
+		public int turn;
+		public string[] validMoves;
+		public bool gameOver;
 	}
-	public class DocumentType2: Meteor.MongoDocument {
-		public string status;
-		public int _id;
-		public string element;
-	}
-	public class DocumentType3: Meteor.MongoDocument {
-		public string[] moves;
-		public int _id;
-		public string element;
-	}
+
 
 	GameObject findObj(string loc){
 
@@ -166,6 +152,10 @@ public class chessBehavior : MonoBehaviour {
 		var zPos = 245 - z * 70;
 		//Debug.Log ("x: " + xPos + " y: " + zPos);
 		return new Vector3 ((float)xPos, (float)0, (float)zPos);
+	}
+
+	void javaMessage(String x){
+		newMove = x;
 	}
 
 }
